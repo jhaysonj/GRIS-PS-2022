@@ -1,2 +1,9 @@
 #!/bin/bash
 zip -r "pasta_zipada" *
+if find . -type f -iname 'pasta_zipada.zip'; then
+   clear
+   echo "Arquivo gerado com sucesso"
+else
+   clear
+   echo "Ocorreu algum erro, tente novamente" 
+fi
