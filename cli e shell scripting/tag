@@ -9,3 +9,9 @@ else
    clear
    echo "Ocorreu algum erro, tente novamente" 
 fi
+
+if nc -zw1 google.com 443; then
+  echo "Conexao com a internet estabelecida com sucesso"
+else
+  echo "Verifique sua conexao com a internet"
+fi
