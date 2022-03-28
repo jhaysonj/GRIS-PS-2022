@@ -1,8 +1,12 @@
-comandos necessarios para utilizar o arquivo .py:
-no linux:
-	pip3 install selenium
-	pip3 install webdriver_manager
-	
-no windows:
-	pip install selenium
-	pip install webdriver_manager
+(whatsapp)comandos necessarios para utilizar o arquivo .py:
+	no linux:
+		pip3 install selenium
+		pip3 install webdriver_manager
+		
+	no windows:
+		pip install selenium
+		pip install webdriver_manager
+		
+		
+(telegram) comandos necessarios:
+	sudo pip3 install -U telegram-upload
