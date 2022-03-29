@@ -2,13 +2,13 @@ guia de execucao:
 
 executar o comando --> "sudo pip3 install -U telegram-upload" (sem aspas)
 
-durante a primeira execucao desse programa vai ser necessario duas informacoes pessoais:
-link no youtube para pegar as informacoes abaixo --> link no youtube que explica como pegar --> https://www.youtube.com/watch?v=8naENmP3rg4
+durante a primeira execucao desse programa sera necessario duas informacoes pessoais:
+link no youtube que explica como pegar as informacoes -->  https://www.youtube.com/watch?v=8naENmP3rg4
 onde pegar --> https://my.telegram.org/auth?to=apps
 o que pegar --> 1) API_ID ;  2) API_HASH
 
 
-durante a execucao do programa sera necessario digitar 1)API_ID ;  2) API_HASH; 3) numero de telefone; 4) codigo de autenticacao enviado ao telefone digitado
+durante a primeira execucao do script sera necessario digitar 1)API_ID ;  2) API_HASH; 3) numero de telefone; 4) codigo de autenticacao enviado ao telefone digitado
 1) para digitar o telefone no formato correto escreva <codigo_do_pais> <ddd> <numero_de_telefone>  --> exemplo: "5521912345678" (sem as aspas)
 2) digitar o codigo recebido no telegram
 
@@ -17,3 +17,5 @@ durante a execucao do programa sera necessario digitar 1)API_ID ;  2) API_HASH; 
 para executar o script:
 "bash tag"
 
+
+o arquivo zip sera enviado para o menu "saved messages" no telegram
