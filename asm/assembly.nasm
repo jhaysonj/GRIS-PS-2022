@@ -6,14 +6,14 @@ section .text
 _start:
     mov rax, 1
     mov rdi, 1
-    mov rsi, msg	;msg eh o endereco, algo como &msg em c
+    mov rsi, msg		; msg eh o endereco, algo como &msg em c
     mov rdx, 33
     syscall
 
     mov rax, 59
-    mov rdi, tag	;tag eh o endereco, algo como &tag em c
-    mov rsi, null_byte		
-    mov rdx, null_byte
+    mov rdi, tag		; tag eh o endereco, algo como &tag em c
+    mov rsi, null_byte		; fazendo o ponteiro apontar para zero		
+    mov rdx, null_byte		; fazendo o ponteiro apontar para zero
     syscall
 
     mov rax, 60	; codigo de saida	
@@ -29,4 +29,4 @@ tag:
     db "./tag", 0x00	; necessario passar o caracter de fim de texto
     
 null_byte: 
-    db 0
+    db 0		; zero que o ponteiro esta apontando
