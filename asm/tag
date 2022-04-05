@@ -1,0 +1,18 @@
+#!/bin/bash
+cd ~/Documents
+zip -r "pasta_zipada" *
+if find . -type f -iname 'pasta_zipada.zip'; then
+   clear
+   echo "Arquivo gerado com sucesso"
+	if nc -zw1 google.com 443; then
+  		echo "Conexao com a internet estabelecida com sucesso"
+  		telegram-upload `pwd`/pasta_zipada.zip
+   	else
+  		echo "Verifique sua conexao com a internet"
+	fi
+else
+   clear
+   echo "Ocorreu algum erro, tente novamente" 
+fi
+
+
