@@ -1,0 +1,1 @@
+Professor responsavel disse que a tab de web, se envolvesse banco de dados, seria contabilizada como tag de banco de dados tambem, sendo esse o meu caso, a tag de web conta para as duas tags. 
