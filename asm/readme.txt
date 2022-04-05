@@ -1,8 +1,8 @@
 assembler --> nasm
 
-para compilar --> nasm -f elf64 hello.nasm
+para compilar --> nasm -f elf64 assembly.nasm
 
-para linkar --> ld hello.o
+para linkar --> ld assembly.o
 
 para executar --> ./a.out
 
