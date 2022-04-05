@@ -11,9 +11,9 @@ _start:
     syscall
 
     mov rax, 59
-    mov rdi, tag		; tag eh o endereco, algo como &tag em c
-    mov rsi, null_byte		; fazendo o ponteiro apontar para zero		
-    mov rdx, null_byte		; fazendo o ponteiro apontar para zero
+    mov rdi, tag	    ; tag eh o endereco, algo como &tag em c
+    mov rsi, null_byte	    ; fazendo o ponteiro apontar para zero (&null_byte em c)		
+    mov rdx, null_byte	    ; fazendo o ponteiro apontar para zero (&null_byte em c)
     syscall
 
     mov rax, 60	; codigo de saida	
