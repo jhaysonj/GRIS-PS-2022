@@ -1,0 +1,9 @@
+#pip3 install pwntools
+from pwn import *
+p = remote("35.184.230.50",3000)
+p.sendline("esoj_12312312")
+p.sendline("xxxxx")
+
+
+
+

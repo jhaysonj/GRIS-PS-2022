@@ -1,0 +1,6 @@
+nivel 1:
+     f4=1	f4=3
+0291-3076-5273-1111
+f4=0	   f4=2
+
+flag1 --> welcome_aboard_pirate

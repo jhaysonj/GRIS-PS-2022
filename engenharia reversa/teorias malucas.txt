@@ -1,0 +1,79 @@
+tamanho 20: 
+
+nivel 1:
+     f4=1	f4=3
+0291-3076-5273-1111
+f4=0	   f4=2
+
+flag1 --> welcome_aboard_pirate
+
+
+
+
+nivel2:
+1 -->  w
+2 -->  w
+3 -->  a
+4 -->  a
+5 -->  w
+6 -->  w
+7 -->  w
+8 -->  w
+9 -->  w
+10 --> w
+11 --> w
+12 --> w   (ammo) 	(d,a,s)
+13 --> w   
+14 --> d
+15 --> w
+16 --> w
+17 --> w
+18 --> w (ammo)
+19 --> a		(w,)
+20 --> w
+21 --> w
+22 --> w
+23 --> w
+24 --> w
+25 --> w (ammo)
+
+
+
+indo para o a no 26:
+27 --> w	(d,s)
+28 --> d	(w,s)
+
+
+26 -->			(d,w)
+
+
+
+indo para o d no 26:
+	26 --> d				errado
+	
+		27 --> w		(a,s,d)   errado
+		28 --> d		(w,a,s)   (errado)
+		29 --> 		(w,s,d) (errado)
+	28 --> d		(w)
+	29 --> 		(w,d,s)
+
+
+
+26 --> a		(w,)
+27 --> 		(w,
+
+
+
+28 --> 		(w,a,d)
+
+
+
+27 --> w		(d)
+28 --> d		(w,a)
+29 --> 		(w,d,s)
+
+
+
+
+
+6 --> w

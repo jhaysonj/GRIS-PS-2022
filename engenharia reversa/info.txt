@@ -1,0 +1,62 @@
+#flag1
+
+void level1(void)
+
+{
+  uint uVar1;
+  size_t sVar2;
+  long in_FS_OFFSET;
+  int local_f4;
+  char *local_e8;
+  undefined2 local_da; --> 2bites
+  char local_d8 [200];
+  long local_10;
+  
+  local_10 = *(long *)(in_FS_OFFSET + 0x28);
+  local_da = 0x2d; --> 45ascii --> "-"
+  local_f4 = 0;	--> recebeu o valor 0
+  puts("Please input your game serial before playing:");
+  fgets(local_d8,199,stdin); #leitura de 199 coisas
+  sVar2 = strlen(local_d8);  #var = tamanho do serial number
+  if (sVar2 != 0x14) {  #tamanho do serial number != 20 ---> tamanho = 20 "123-456-789-123-456-"
+    FailPiracy();
+  }
+  local_e8 = strtok(local_d8,(char *)&local_da); --> supondo "123-456-789-123-456-789-1"   4 blocos --> 3 tracos
+  while (local_e8 != (char *)0x0) {
+    uVar1 = atoi(local_e8);	--> ta pegando o serial number de tamanho 20 com hifen e tudo, e transformando em um inteiro
+    if (local_f4 == 3) {
+      if ((uVar1 & 1) == 0) {
+        FailPiracy();
+      }
+    }
+    else if (local_f4 < 4) {  #local_f4 == 0
+      if (local_f4 == 2) {	#local_f4 == 0
+        if ((uVar1 & 0x1499) != 0x1499) {	--> uvar != 5273 --> local_f4 terceira execucao = 5273	
+          FailPiracy();
+        }
+      }
+      else if (local_f4 < 3) { #local_f4 == 0
+        if (local_f4 == 0) {
+          if ((int)uVar1 % 0x123 != 0) { # decimal = 291 --> multiplo de 291	--> serial number eh multiplo de 291 --> numero tem tamanho 20 e eh multiplo de 291
+            FailPiracy();
+          }
+        }
+        else if ((local_f4 == 1) && (uVar1 != 0xc04)) {	1 --> ser igual 3076(decimal)    2 --> ser diferente de 3076(decimal)	uvar1 == 3076
+          FailPiracy();
+        }
+      }
+    }
+    local_e8 = strtok((char *)0x0,(char *)&local_da);  1 --> null local_da = nosso separador, '-'	           
+    local_f4 = local_f4 + 1; --> soma +1 no inteiro
+  }
+  if (local_f4 != 4) {
+    FailPiracy();
+  }
+  puts(flag1);				--> imprime na tela
+  fprintf(stderr,"Team %s solved flag1\n",playerData);
+  if (local_10 == *(long *)(in_FS_OFFSET + 0x28)) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}

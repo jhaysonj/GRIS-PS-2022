@@ -1,0 +1,34 @@
+player data = "trusting_nobel x"
+
+
+loop:
+	Dentro desse loop aí ele tá pegando de 4 em 4 bytes e somando
+	(int i = 0; i < tamanho//4; i++)
+	
+	
+	O local_24 é o i do loop
+
+
+
+
+favoraveis --> 0 1 2 3 4  
+
+
+desfavoraveis --> 5 a 99 (incluindo os extremos)
+
+
+rand() gera pseudo-aleatorios --> existe uma semente que faz gerar esses valores
+
+rand(2)
+
+seed para "trusting_nobel x" --> 928458560
+
+num_aleatorios = [2 1 1 6 4 4 4 6 4 4 2 1 5 5 1 6 1 1 5 6]
+
+
+
+
+
+aleatorio gerado = 0x26712362 --> 644948834
+meu valor sorteado = 		  644948834 
+
