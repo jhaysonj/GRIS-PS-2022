@@ -1,0 +1,115 @@
+# Tag de WAF
+
+## Objetivo
+
+Escolha uma aplicação do SecDevLabs (https://github.com/globocom/secDevLabs/) e crie um conjunto de regras de WAF usanfo modsecurity para mitigar a vulnerabilidade descrita.
+
+## Instalação do ambiente
+
+A seguir, estão descritos alguns passos para a criação de um ambiente semelhante ao utilizado no GET. Você é livre para seguir outros tutoriais ou procurar o Manoel caso tenha dúvidas (telegram: @mdjunior).
+
+1. Instale uma VM com Debian ou Ubuntu
+2. Instale o nginx
+2.1 sudo add-apt-repository ppa:ondrej/nginx-mainline -y
+2.2 apt update
+2.3 apt install nginx-core nginx-common nginx nginx-full
+3. Instale o código fonte do nginx
+3.1 habilite os respositórios deb-src em /etc/apt/sources.list.d/ondrej-ubuntu-nginx-mainline-*.list (basta descomentar a linha)
+3.2 apt update; apt install dpkg-dev
+3.3 mkdir -p /usr/local/src/nginx; cd /usr/local/src/nginx; apt source nginx
+4. Instale o modsecurity
+4.1 apt install git
+4.2 git clone --depth 1 -b v3/master --single-branch https://github.com/SpiderLabs/ModSecurity /usr/local/src/ModSecurity/
+4.3 apt install gcc make build-essential autoconf automake libtool libcurl4-openssl-dev liblua5.3-dev libfuzzy-dev ssdeep gettext pkg-config libpcre3 libpcre3-dev libxml2 libxml2-dev libcurl4 libgeoip-dev libyajl-dev doxygen uuid-dev
+4.4 git submodule init
+4.5 git submodule update
+4.6 ./build.sh 
+4.7 ./configure
+4.8 make -j1 ; sudo make install
+5. Instale o conector de nginx do modsecurity
+5.1 git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git /usr/local/src/ModSecurity-nginx/
+5.2 cd /usr/local/src/nginx/nginx-*/
+5.3 apt build-dep nginx
+5.4 ./configure --with-compat --add-dynamic-module=/usr/local/src/ModSecurity-nginx
+5.5 make modules
+5.6 sudo cp objs/ngx_http_modsecurity_module.so /usr/share/nginx/modules/
+6. Inicie o nginx
+6.1 systemctl start nginx
+7. Copie os arquivos de exemplo e depois reinicie o nginx
+7.1 systemctl restart nginx
+
+### Arquivos de exemplo
+
+#### /etc/nginx/nginx.conf 
+```
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+load_module modules/ngx_http_modsecurity_module.so;
+
+
+error_log  /var/log/nginx/error-proxy.debug  debug;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+    log_format google escape=json '{"time":$msec,"server":"$nginx_version","HttpRequest":{"requestMethod":"$request_method","requestUrl":"$request_uri","requestSize":$request_length,"status":$status,"responseSize":$bytes_sent,"userAgent":"$http_user_agent","remoteIp":"$remote_addr","remotePort":$remote_port,"serverIp":"$server_addr","referer":"$http_referer","latency":$request_time,"cacheLookup":true,"cacheHit":false,"protocol":"$server_protocol"}}';
+    server {
+        listen       80;
+        server_name  localhost;
+        access_log /var/log/nginx/access-proxy.log google;
+
+        location / {
+            modsecurity on;
+            modsecurity_rules_file "/etc/nginx/rules.conf";
+
+            proxy_pass http://localhost:10007/;
+        }
+    }
+}
+```
+
+#### /etc/nginx/rules.conf
+```
+SecRuleEngine On
+SecRequestBodyAccess On
+SecRequestBodyLimit 13107200
+SecRequestBodyLimitAction ProcessPartial
+SecResponseBodyAccess Off
+SecResponseBodyMimeType text/plain text/html text/xml
+SecAuditEngine RelevantOnly
+SecAuditLogParts ABIJDEFHZ
+SecAuditLogFormat JSON 
+SecAuditLogRelevantStatus "403"
+SecComponentSignature "WAF/0.0.1"
+SecAuditLog /var/log/nginx/access-audit.log
+SecAuditLogType Serial 
+
+SecDefaultAction "phase:1,log,auditlog,deny,status:403"
+SecDefaultAction "phase:2,log,auditlog,deny,status:403"
+
+# Simple deny rule
+SecRule "ARGS:testparam" "@contains test" "id:'42',phase:1,t:none,log,block,msg:'simple deny'"
+
+# deny script tags
+#SecRule "ARGS:search" "@contains script" "id:'43',phase:1,t:none,log,block,msg:'simple deny with script'"
+# <SCRIPT>alert(1)</SCRIPT>
+
+# deny script tags
+#SecRule "ARGS:search" "@contains script" "id:'44',phase:1,t:lowercase,log,block,msg:'simple deny with script'"
+# <IMG SRC=# onmouseover="alert('xxs')">
+
+# using detectXSS
+#SecRule "ARGS:search" "@detectXSS" "id:'45',phase:1,t:none,log,block,msg:'using detectXSS'"
+
+# allowlist
+SecRule ARGS:search "@rx [^\w\s-]" "id:'46',phase:1,t:none,log,block,msg:'using allowlist'"
+SecRule ARGS:id "@rx [^\d]" "id:'47',phase:1,t:none,log,block,msg:'using allowlist id parameter'"
+```
